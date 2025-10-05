@@ -35,3 +35,13 @@ function operate(firstNum, secondNum, operator) {
         return divide(firstNum, secondNum);
     }
 }
+
+const displayNumber = document.querySelector('.display');
+const buttonNum = document.querySelectorAll('button');
+
+buttonNum.forEach(button => {
+    button.addEventListener('click', function() {
+        const buttonText = this.textContent;
+        displayNumber.textContent = buttonText;
+    });
+});

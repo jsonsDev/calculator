@@ -36,12 +36,26 @@ function operate(firstNum, secondNum, operator) {
     }
 }
 
-const displayNumber = document.querySelector('.display');
-const buttonNum = document.querySelectorAll('button');
+const displayNum = document.querySelector('.display');
+const selectedButton = document.querySelectorAll('button');
 
-buttonNum.forEach(button => {
+selectedButton.forEach(button => {
     button.addEventListener('click', function() {
-        const buttonText = this.textContent;
-        displayNumber.textContent = buttonText;
+        const selectedButton = button.textContent;
+        if (selectedButton === 'DEL') {
+            if (displayNum.textContent.length > 1) {
+                displayNum.textContent = displayNum.textContent.slice(0, -1);
+            } else {
+                displayNum.textContent = "0";
+            }
+        } else if (selectedButton === 'C') {
+            displayNum.textContent = '0';
+        } else if (selectedButton === '=') {
+            return operate();
+        } else {
+            displayNum.textContent += selectedButton;
+        }
     });
 });
+
+console.log(selectedButton);

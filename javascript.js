@@ -53,12 +53,13 @@ selectedButton.forEach(button => {
         } else if (selectedButton === 'C') {
             displayNum.textContent = '0';
         } else if (selectedButton === '=') {
-            return operate();
+            return operate(firstNum, operator, secondNum);
         } else {
             if (displayNum.textContent == '0') {
                 displayNum.textContent = '';
             }
-            displayNum.textContent += selectedButton;
+            // Change to store both firstNum and secondNum (opposite sides of operator)
+            firstNum = displayNum.textContent += selectedButton;
         }
     });
 });

@@ -39,6 +39,8 @@ function operate(firstNum, secondNum, operator) {
 const displayNum = document.querySelector('.display');
 const selectedButton = document.querySelectorAll('button');
 
+displayNum.textContent = "0";
+
 selectedButton.forEach(button => {
     button.addEventListener('click', function() {
         const selectedButton = button.textContent;
@@ -53,6 +55,9 @@ selectedButton.forEach(button => {
         } else if (selectedButton === '=') {
             return operate();
         } else {
+            if (displayNum.textContent == '0') {
+                displayNum.textContent = '';
+            }
             displayNum.textContent += selectedButton;
         }
     });

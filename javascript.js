@@ -1,7 +1,3 @@
-let firstNum;
-let secondNum;
-let operator;
-
 function add(firstNum, secondNum) {
     const sum = firstNum + secondNum;
     return sum;
@@ -23,15 +19,13 @@ function divide(firstNum, secondNum) {
 }
 
 function operate(firstNum, secondNum, operator) {
-    firstNum;
-    secondNum;
-    if (operator === '+') {
+    if (operator == '+') {
         return add(firstNum, secondNum);
-    } else if (operator === '-') {
+    } else if (operator == '-') {
         return subtract(firstNum, secondNum);
-    } else if (operator === '*') {
+    } else if (operator == 'x') {
         return multiply(firstNum, secondNum);
-    } else if (operator === '/') {
+    } else if (operator == '/') {
         return divide(firstNum, secondNum);
     }
 }
@@ -43,7 +37,8 @@ displayNum.textContent = "0";
 
 selectedButton.forEach(button => {
     button.addEventListener('click', function() {
-        const selectedButton = button.textContent;
+        let selectedButton = button.textContent;
+        
         if (selectedButton === 'DEL') {
             if (displayNum.textContent.length > 1) {
                 displayNum.textContent = displayNum.textContent.slice(0, -1);
@@ -52,16 +47,26 @@ selectedButton.forEach(button => {
             }
         } else if (selectedButton === 'C') {
             displayNum.textContent = '0';
-        } else if (selectedButton === '=') {
-            return operate(firstNum, operator, secondNum);
         } else {
             if (displayNum.textContent == '0') {
                 displayNum.textContent = '';
+            } 
+        
+        let calcInput = displayNum.textContent += selectedButton;
+        let equation = calcInput.split(/([+\-x/=])/);
+        let firstNum = parseInt(equation[0]);
+        let operator = equation[1];
+        let secondNum = parseInt(equation[2]);
+
+        console.log(firstNum);
+        console.log(secondNum);
+        console.log(operator);
+
+            if (selectedButton === '=') {
+                displayNum.textContent = operate(firstNum, secondNum, operator);
             }
-            // Change to store both firstNum and secondNum (opposite sides of operator)
-            firstNum = displayNum.textContent += selectedButton;
         }
     });
 });
 
-console.log(selectedButton);
+

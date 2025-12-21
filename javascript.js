@@ -1,3 +1,34 @@
+let firstNum = null;
+let currentOperator = null;
+let shouldResetScreen = false;
+
+const displayNum = document.querySelector('.display');
+displayNum.textContent = "0";
+
+document.querySelectorAll('button').forEach(btn => {
+    btn.addEventListener('click', () => {
+        const value = btn.textContent;
+
+        if (!isNaN(value)) {
+            appendNumber(value);
+        } else if (value === "C") {
+            displayNum.textContent = "0";
+            firstNum = null;
+            currentOperator = null;
+            } else if (value === 'DEL') {
+                if (displayNum.textContent.length > 1) {
+                    displayNum.textContent = displayNum.textContent.slice(0, -1);
+                } else {
+                    displayNum.textContent = "0";
+                }
+            } else if (value === "=") {
+            evaluate();
+            } else { 
+            setOperator(value);  // + - x /
+        }
+    });
+});
+
 function add(firstNum, secondNum) {
     const sum = firstNum + secondNum;
     return sum;
@@ -30,43 +61,34 @@ function operate(firstNum, secondNum, operator) {
     }
 }
 
-const displayNum = document.querySelector('.display');
-const selectedButton = document.querySelectorAll('button');
+function resetDisplay() {
+    displayNum.textContent = "";
+    shouldResetScreen = false;
+}
 
-displayNum.textContent = "0";
+function appendNumber(num) {
+    if (displayNum.textContent === "0" || shouldResetScreen) {
+        resetDisplay();
+    }
+    displayNum.textContent += num;
+}
 
-selectedButton.forEach(button => {
-    button.addEventListener('click', function() {
-        let selectedButton = button.textContent;
-        
-        if (selectedButton === 'DEL') {
-            if (displayNum.textContent.length > 1) {
-                displayNum.textContent = displayNum.textContent.slice(0, -1);
-            } else {
-                displayNum.textContent = "0";
-            }
-        } else if (selectedButton === 'C') {
-            displayNum.textContent = '0';
-        } else {
-            if (displayNum.textContent == '0') {
-                displayNum.textContent = '';
-            } 
-        
-        let calcInput = displayNum.textContent += selectedButton;
-        let equation = calcInput.split(/([+\-x/=])/);
-        let firstNum = parseInt(equation[0]);
-        let operator = equation[1];
-        let secondNum = parseInt(equation[2]);
+function setOperator(operator) {
+    if (currentOperator !== null) {
+        evaluate();
+    }
+    firstNum = Number(displayNum.textContent);
+    currentOperator = operator;
+    shouldResetScreen = true;
+}
 
-        console.log(firstNum);
-        console.log(secondNum);
-        console.log(operator);
+function evaluate() {
+    if (currentOperator === null || shouldResetScreen) return;
+    
+    const secondNum = Number(displayNum.textContent);
+    const result = operate(firstNum, secondNum, currentOperator);
 
-            if (selectedButton === '=') {
-                displayNum.textContent = operate(firstNum, secondNum, operator);
-            }
-        }
-    });
-});
-
-
+    displayNum.textContent = result;
+    firstNum = result;
+    currentOperator = null;
+}

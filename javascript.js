@@ -45,8 +45,12 @@ function multiply(firstNum, secondNum) {
 }
 
 function divide(firstNum, secondNum) {
+    if (secondNum != 0) {
     const difference = firstNum / secondNum;
     return difference;
+    } else {
+        return "Error: No bueno / 0!";
+    }
 }
 
 function operate(firstNum, secondNum, operator) {

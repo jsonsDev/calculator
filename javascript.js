@@ -15,16 +15,18 @@ document.querySelectorAll('button').forEach(btn => {
             displayNum.textContent = "0";
             firstNum = null;
             currentOperator = null;
-            } else if (value === 'DEL') {
-                if (displayNum.textContent.length > 1) {
-                    displayNum.textContent = displayNum.textContent.slice(0, -1);
-                } else {
-                    displayNum.textContent = "0";
-                }
-            } else if (value === "=") {
-            evaluate();
-            } else { 
-            setOperator(value);  // + - x /
+        } else if (value === 'DEL') {
+            if (displayNum.textContent.length > 1) {
+                displayNum.textContent = displayNum.textContent.slice(0, -1);
+            } else {
+                displayNum.textContent = "0";
+            }
+        } else if (value === '.' && !displayNum.textContent.includes('.')) {
+            parseFloat(displayNum.textContent += '.');
+        } else if (value === "=") {
+        evaluate();
+        } else { 
+        setOperator(value);  // + - x /
         }
     });
 });
